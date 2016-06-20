@@ -64,9 +64,6 @@ func (c *Client) CreateRoom(name string) error {
 	if err != nil {
 		return err
 	}
-	if room.Status == "success" {
-		return nil
-	}
 	return nil
 
 }
