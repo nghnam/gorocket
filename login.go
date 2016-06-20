@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type Credentical struct {
+type Credential struct {
 	Token  string `json:"authToken"`
 	UserId string `json:"userId"`
 }
@@ -19,7 +19,7 @@ type LoginResponse struct {
 	} `json:"data"`
 }
 
-func GetToken(url, username, password string) (Credentical, error) {
+func GetToken(url, username, password string) (Credential, error) {
 	body := "user=" + username + "&password=" + password
 	req, err := http.NewRequest("POST", url+"/login", bytes.NewBuffer([]byte(body)))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
@@ -28,12 +28,12 @@ func GetToken(url, username, password string) (Credentical, error) {
 		defer r.Body.Close()
 	}
 	if err != nil {
-		return Credentical{}, err
+		return Credential{}, err
 	}
 	cred := new(LoginResponse)
 	err = json.NewDecoder(r.Body).Decode(&cred)
 	if err != nil {
-		return Credentical{}, err
+		return Credential{}, err
 	}
 	return cred.Data, nil
 }
